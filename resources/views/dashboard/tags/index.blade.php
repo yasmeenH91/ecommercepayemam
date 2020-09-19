@@ -1,17 +1,18 @@
-@extends('layouts.admin')
 
+@extends('layouts.admin')
 @section('content')
+
     <div class="app-content content">
         <div class="content-wrapper">
             <div class="content-header row">
                 <div class="content-header-left col-md-6 col-12 mb-2">
-                    <h3 class="content-header-title"> اللغات </h3>
+                    <h3 class="content-header-title"> Tags </h3>
                     <div class="row breadcrumbs-top">
                         <div class="breadcrumb-wrapper col-12">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">الرئيسية</a>
                                 </li>
-                                <li class="breadcrumb-item active"> اللغات
+                                <li class="breadcrumb-item active"> Tags
                                 </li>
                             </ol>
                         </div>
@@ -25,7 +26,6 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title">جميع لغات الموقع </h4>
                                     <a class="heading-elements-toggle"><i
                                             class="la la-ellipsis-v font-medium-3"></i></a>
                                     <div class="heading-elements">
@@ -44,36 +44,31 @@
                                 <div class="card-content collapse show">
                                     <div class="card-body card-dashboard">
                                         <table
-                                            class="table display nowrap table-striped table-bordered scroll-horizontal">
-                                            <thead>
+                                            class="table display nowrap table-striped table-bordered ">
+                                            <thead class="">
                                             <tr>
-                                                <th> الاسم</th>
-                                                <th> القسم الرئيسي</th>
-                                                <th>الاسم بالرابط</th>
-                                                <th>الحالة</th>
-                                                <th>صورة القسم</th>
+                                                <th>الاسم </th>
+                                                <th> الاسم بالرابط</th>
                                                 <th>الإجراءات</th>
                                             </tr>
                                             </thead>
                                             <tbody>
 
-                                            @isset($categories)
-                                                @foreach($categories as $category)
+                                            @isset($tags)
+                                                @foreach($tags as $tag)
                                                     <tr>
-                                                        <td>{{$category -> name}}</td>
-                                                        <td>{{$category ->_parent ->name ?? '--'}}</td>
-                                                        <td>{{$category -> slug}}</td>
-                                                        <td>{{$category -> getActive()}}</td>
-                                                        <td>{{$category -> img}}</td>
+                                                        <td>{{$tag -> name}}</td>
+                                                        <td>{{$tag ->  slug}}</td>
                                                         <td>
                                                             <div class="btn-group" role="group"
                                                                  aria-label="Basic example">
-                                                                <a href="{{route('admin.maincategories.edit',$category -> id)}}"
+                                                                <a href="{{route('admin.tags.edit',$tag -> id)}}"
                                                                    class="btn btn-outline-primary btn-min-width box-shadow-3 mr-1 mb-1">تعديل</a>
 
 
-                                                                <a href="{{route('admin.maincategories.delete',$category -> id)}}"
+                                                                <a href="{{route('admin.tags.delete',$tag -> id)}}"
                                                                    class="btn btn-outline-danger btn-min-width box-shadow-3 mr-1 mb-1">حذف</a>
+
 
 
                                                             </div>
@@ -86,7 +81,7 @@
                                             </tbody>
                                         </table>
                                         <div class="justify-content-center d-flex">
-                                            {{$categories->links()}}
+
                                         </div>
                                     </div>
                                 </div>
@@ -97,4 +92,5 @@
             </div>
         </div>
     </div>
+
 @stop

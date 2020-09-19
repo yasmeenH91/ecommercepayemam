@@ -17,7 +17,7 @@ class MainCategoriesController extends Controller
      */
     public function index()
     {
-         $categories = Category::parent()->paginate(PAGINATION_COUNT);
+         $categories = Category::with('_parent')->orderByDesc('id')->paginate(PAGINATION_COUNT);
         // dd($categories);
         return view('dashboard.categories.index',compact('categories'));
     }
@@ -29,7 +29,8 @@ class MainCategoriesController extends Controller
      */
     public function create()
     {
-        return view('dashboard.categories.create');
+        $categories = Category::select('id','parent_id')->get();
+        return view('dashboard.categories.create',compact('categories'));
     }
 
     /**
@@ -50,6 +51,12 @@ class MainCategoriesController extends Controller
                 $request->request->add(['is_active' => 0]);
             else
                 $request->request->add(['is_active' => 1]);
+
+            //if user choose main category except the parent id from request
+            if ($request->type == 1){
+              //$request->except('parent_id');
+                $request->request->add(['parent_id' => null]);
+            }
 
             $category = Category::create($request->except('_token'));
 

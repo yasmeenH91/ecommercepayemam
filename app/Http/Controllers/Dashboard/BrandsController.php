@@ -63,10 +63,21 @@ class BrandsController extends Controller
             $brand->photo = $fileName;
 
             $brand->save();
+
+//            $requestData=$request->except(['_token','_method']);
+//            //dd( $requestData);
+//            $requestData["is_active"]=$request->has("is_active")?1:0;
+//            if($request->has('photo')){
+//                $file_path=uploadImage("brands",$request->photo);
+//                $requestData['photo']=$file_path;
+//            }
+//            DB::beginTransaction();
+//            Brand::create($requestData);
             DB::commit();
             return redirect()->route('admin.brands')->with(['success' => 'تم ألاضافة بنجاح']);
 
         }catch (\Exception $ex){
+            dd($ex);
             DB::rollback();
             return redirect()->route('admin.brands')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
         }
@@ -128,6 +139,8 @@ class BrandsController extends Controller
                     ->update([
                         'photo' => $fileName,
                     ]);
+
+
             }
 
             if (!$request->has('is_active'))
@@ -166,7 +179,9 @@ class BrandsController extends Controller
             if (!$brand)
                 return redirect()->route('admin.brands')->with(['error' => 'هذا الماركة غير موجود ']);
 
+            $brand->translations()->delete();
             $brand->delete();
+          // unlink($brand->photo);
 
             return redirect()->route('admin.brands')->with(['success' => 'تم  الحذف بنجاح']);
 
