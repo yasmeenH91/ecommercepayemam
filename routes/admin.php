@@ -2,18 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-
 Route::group(
     [
         'prefix' => LaravelLocalization::setLocale(),
@@ -82,6 +70,14 @@ Route::group(
             Route::get('delete/{id}','TagsController@destroy') -> name('admin.tags.delete');
         });
         ################################## end tags    #######################################
+
+        ################################## Products routes ######################################
+        Route::group(['prefix' => 'products'], function () {
+            Route::get('/','ProductController@index') -> name('admin.products');
+            Route::get('general-information','ProductsController@create') -> name('admin.products.general.create');
+            Route::post('store-general-information','ProductsController@store') -> name('admin.products.general.store');
+        });
+        ################################## end Products    #######################################
 
     });
 

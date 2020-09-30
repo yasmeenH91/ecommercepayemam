@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Enumerations\CategoryType;
 use App\Http\Requests\MainCategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -53,7 +54,7 @@ class MainCategoriesController extends Controller
                 $request->request->add(['is_active' => 1]);
 
             //if user choose main category except the parent id from request
-            if ($request->type == 1){
+            if ($request->type == CategoryType::mainCategory){
               //$request->except('parent_id');
                 $request->request->add(['parent_id' => null]);
             }
